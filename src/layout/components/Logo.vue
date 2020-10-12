@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
+  <div class="sidebar-logo-container" :class="{ collapse: collapse }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" src="@/assets/images/sinohealth.png" class="sidebar-logo mini" />
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import settings from '@/settings'
+import settings from '@/settings';
 export default {
   name: 'SidebarLogo',
   props: {
@@ -26,14 +26,14 @@ export default {
   data() {
     return {
       title: settings.title,
-      logo:
-        'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
-    }
+      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/variables.scss';
 .sidebarLogoFade-enter-active {
   transition: opacity 1.5s;
 }
@@ -45,10 +45,12 @@ export default {
 
 .sidebar-logo-container {
   position: relative;
-  width: 100%;
+  display: inline-block;
+  width: 150px;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
+  background: $menuBg;
+  // background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
