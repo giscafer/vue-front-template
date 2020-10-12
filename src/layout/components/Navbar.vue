@@ -9,7 +9,7 @@
      <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
      -->
     <logo v-if="showLogo" :collapse="false" />
-
+    <nav-menu />
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
@@ -48,12 +48,14 @@ import Screenfull from '@/components/Screenfull';
 import SizeSelect from '@/components/SizeSelect';
 import Search from '@/components/HeaderSearch';
 import Logo from './Logo';
+import NavMenu from './NavMenu';
 
 export default {
   components: {
     Screenfull,
     SizeSelect,
     Logo,
+    NavMenu,
     Search
   },
   computed: {
@@ -106,6 +108,9 @@ export default {
   }
 
   .right-menu {
+    position: absolute;
+    right: 0;
+    top: 2px;
     float: right;
     height: 100%;
     line-height: 50px;

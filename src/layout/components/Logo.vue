@@ -44,18 +44,18 @@ export default {
 }
 
 .sidebar-logo-container {
-  position: relative;
+  position: absolute;
   display: inline-block;
   width: 150px;
   height: 50px;
-  line-height: 50px;
+  line-height: $navBarHeight;
   background: $menuBg;
   // background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
   & .sidebar-logo-link {
-    height: 100%;
+    height: 60px;
     width: 100%;
 
     & .sidebar-logo {
