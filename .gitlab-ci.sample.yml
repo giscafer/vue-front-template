@@ -1,0 +1,118 @@
+# GitLab CI/CD 前端 Angular 持续集成实践 : https://github.com/giscafer/front-end-manual/issues/27
+image: node:12.14.0
+
+# 变量定义
+# https://docs.gitlab.com/ee/ci/variables/#using-predefined-environment-variables
+variables:
+  NODE_MODULES_VERSION: 'vue-admin-template-1594718713104' # node_modules版本号，每次升级依赖改一下这里的数值
+
+  CURRENT_BRANCH: $CI_COMMIT_REF_NAME
+  PROJECT_NAME: 'vue-admin-template'
+  JENKINS_TRIGGER_URL: 'http://jenkins.sinohealth.cn/view/%E4%B8%AD%E5%8F%B0-%E6%B5%8B%E8%AF%95/job/vue-admin-template-test/build?token=gitlab_trigger'
+  PROD_JENKINS_TRIGGER_URL: 'http://jenkins.sinohealth.cn/view/%E4%B8%AD%E5%8F%B0-%E7%94%9F%E4%BA%A7/job/vue-admin-template-prod/buildWithParameters?token=gitlab_trigger&CUR_VERSION=NEW'
+
+# 缓存目录文件
+# key是唯一值，重名会覆盖上一次的缓存
+# gitlab 12.5版本以后支持这样的操作：https://docs.gitlab.com/ee/ci/yaml/README.html#cachekeyfiles
+cache:
+  key: '$NODE_MODULES_VERSION'
+  paths:
+    - node_modules/
+
+before_script:
+  - echo "NODE_MODULES_VERSION=$NODE_MODULES_VERSION"
+  - echo "CURRENT_BRANCH=$CURRENT_BRANCH"
+  # - npm config set registry http://registry.npm.taobao.org/
+  # - npm config set sass_binary_site http://npm.taobao.org/mirrors/node-sass/
+  # - npm install
+
+stages:
+  - lint
+  - build
+  # - deploy
+  - auto_tag
+  - failure_job # 错误
+
+lint:
+  stage: lint
+  tags:
+    - md-web
+  script:
+    - npm config set registry http://registry.npm.taobao.org/
+    - npm config set sass_binary_site http://npm.taobao.org/mirrors/node-sass/
+    - npm install
+    - npm run lint
+  only:
+    refs:
+      - dev
+      - /^test.*$/
+      - master
+
+# 构建
+trigger_jenkins:
+  stage: build
+  tags:
+    - md-web
+  script:
+    - |
+      if [ "$CI_COMMIT_REF_NAME" = "dev" ]; then
+          echo "跳过"
+          # npm run build:dev
+          # curl -u $JENKINS_USER:$JENKINS_PASS "$JENKINS_TRIGGER_URL"
+      elif [ "$CI_COMMIT_REF_NAME" = "test" ]; then
+          # npm run build:test
+          curl -u $JENKINS_USER:$JENKINS_PASS "$JENKINS_TRIGGER_URL"
+      elif [ "$CI_COMMIT_REF_NAME" = "master" ]; then
+          # npm run build:prod
+          curl -u $JENKINS_USER:$JENKINS_PASS "$PROD_JENKINS_TRIGGER_URL"
+
+      fi
+  only:
+    refs:
+      # - dev
+      - /^test.*$/
+      - master
+##
+##  部署任务
+# deploy:
+#   stage: deploy
+#   tags:
+#     - md-web
+#   environment:
+#     name: '$CI_COMMIT_REF_NAME'
+#   before_script:
+#     - echo "CURRENT_BRANCH=$CURRENT_BRANCH"
+#   script:
+#     # docker build
+#     - docker login -u liangjingming -p Ljm@2020 harbor.sinohealth.com:1443
+#     - docker build -t harbor.sinohealth.com:1443/middleware/console-web:dev .
+#     - docker push harbor.sinohealth.com:1443/middleware/console-web:dev
+
+#   when: on_success
+#   only:
+#     refs:
+#       - dev
+#       - /^test.*$/
+#       - master
+
+## 自动打生产版本标签
+auto_tag:
+  stage: auto_tag
+  tags:
+    - md-web
+  script:
+    - curl http://gitlab.sinohealth.cn/laohoubin/team/raw/master/cicd/auto-tag.sh |bash -s "console-web" $CI_COMMIT_REF_NAME
+    - curl http://gitlab.sinohealth.cn/laohoubin/team/raw/master/cicd/gitlab_notification.sh |bash -s $PROJECT_NAME $CI_COMMIT_REF_NAME "成功且自动打标签"
+  only:
+    refs:
+      - master
+
+# failure_job
+failure_job:
+  stage: failure_job
+  tags:
+    - md-web
+  script:
+    - echo '失败'
+    - curl http://gitlab.sinohealth.cn/laohoubin/team/raw/master/cicd/gitlab_notification.sh |bash -s $PROJECT_NAME $CI_COMMIT_REF_NAME "失败！"
+  when: on_failure

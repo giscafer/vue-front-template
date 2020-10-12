@@ -1,0 +1,175 @@
+<template>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-form ref="generateForm" label-suffix=":" label-position="right" label-width="100px ">
+        <el-row key="0cf945cc8" :gutter="10">
+          <el-col :md="12" :lg="8" :xl="6">
+            <el-form-item label="接口组" prop="apiGroup">
+              <el-input
+                v-model="listQuery.apiGroup"
+                type="text"
+                placeholder="请输入"
+                :style="{width:'100%'}"
+                :disabled="false"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :md="12" :lg="8" :xl="6">
+            <el-form-item label="接口名称" prop="apiName">
+              <el-input
+                v-model="listQuery.apiGroup"
+                type="text"
+                placeholder="请输入"
+                :style="{width:'100%'}"
+                :disabled="false"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :md="12" :lg="8" :xl="6">
+            <el-form-item label="状态" prop="status">
+              <el-input
+                v-model="listQuery.status"
+                type="text"
+                placeholder="请输入"
+                :style="{width:'100%'}"
+                :disabled="false"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :md="12" :lg="8" :xl="6">
+            <div>
+              <el-button
+                class="filter-item"
+                type="primary"
+                icon="el-icon-search"
+                style="margin-left: 20px;"
+                @click="handleFilter"
+              >查询</el-button>
+              <el-button
+                class="filter-item"
+                style="margin-left: 20px;"
+                type="primary"
+                icon="el-icon-plus"
+                @click="handleCreate"
+              >新增用户</el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+
+    <s-table :data="data" :loading="listLoading" :columns="columns" @query-change="getList">
+      <template #action>
+        <el-table-column fixed="right" label="操作" width="360" align="center">
+          <template slot-scope="{row}">
+            <el-button
+              v-if="row.status!='published'"
+              size="mini"
+              type="primary"
+              @click="handleAction(row,'published')"
+            >权限</el-button>
+            <el-popconfirm
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              icon="el-icon-info"
+              icon-color="red"
+              :title="freezeTitle(row.status)"
+              @onConfirm="handleStatus(row)"
+            >
+              <el-button v-if="row.status==='NORMAL'" slot="reference" type="info" size="mini">冻结</el-button>
+              <el-button v-if="row.status==='FREEZE'" slot="reference" type="success" size="mini">解冻</el-button>
+            </el-popconfirm>
+            <!-- 重置密码-->
+            <el-popconfirm
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              icon="el-icon-info"
+              icon-color="red"
+              title="是否确认重置该用户密码？"
+              @onConfirm="handleAction(row)"
+            >
+              <el-button slot="reference" size="mini" type="danger">重置密码</el-button>
+            </el-popconfirm>
+          </template>
+        </el-table-column>
+      </template>
+    </s-table>
+  </div>
+</template>
+<script>
+import STable from '@/components/Table'
+import { fetchList } from '@/api/user-manage' // Mock
+export default {
+  name: '{{ properCase name }}',
+  components: { STable },
+  data() {
+    return {
+      columns: [
+        {
+          label: '序号',
+          field: 'id',
+          width: 90
+        },
+        {
+          label: '账号',
+          field: 'account',
+          width: 160
+        },
+        {
+          label: '公司名称',
+          field: 'companyName'
+        },
+        {
+          label: 'accessKey',
+          field: 'accessKey',
+          width: 180
+        },
+        {
+          label: '秘钥',
+          field: 'secret',
+          width: 180,
+          scopedSlots: { customRender: 'hiddenText' }
+        }
+      ],
+      data: null,
+      listLoading: false,
+      listQuery: {}
+    }
+  },
+  created() {},
+  methods: {
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = 'create'
+      this.dialogAcctVisible = true
+    },
+    freezeTitle(status) {
+      const str = status === 'NORMAL' ? '冻结' : '解冻'
+      return `是否确认${str}该用户？`
+    },
+    handleAction(row, evt) {
+      this.$message({ message: '点击了按钮', type: 'success' })
+    },
+    handleStatus(row, evt) {
+      this.$message({ message: '点击了handleStatus按钮', type: 'success' })
+    },
+    getList(evt) {
+      if (evt) {
+        Object.assign(this.listQuery, evt)
+      }
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.data = response
+        this.listLoading = false
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

@@ -1,0 +1,18 @@
+{
+  "maxLength": 150,
+  "types": [
+    "build",
+    "ci",
+    "docs",
+    "feat",
+    "fix",
+    "perf",
+    "refactor",
+    "release",
+    "style",
+    "test",
+    "chore",
+    "revert"
+  ],
+  "scopes": ["showcase", "packaging", "changelog", "schematics", "*"]
+}

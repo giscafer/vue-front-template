@@ -1,0 +1,97 @@
+// 全局的 margin-* 样式
+@for $i from 1 through 8 {
+  $name: (5 * $i);
+  $val: (5px * $i);
+  .margin-#{$name} {
+    margin: $val;
+  }
+  .margin-top-#{$name} {
+    margin-top: $val;
+  }
+  .margin-bottom-#{$name} {
+    margin-bottom: $val;
+  }
+  .margin-left-#{$name} {
+    margin-left: $val;
+  }
+  .margin-right-#{$name} {
+    margin-right: $val;
+  }
+}
+// 全局的 padding-* 样式
+@for $i from 1 through 8 {
+  $name: (5 * $i);
+  $val: (5px * $i);
+  .padding-#{$name} {
+    padding: $val;
+  }
+  .padding-top-#{$name} {
+    margin-top: $val;
+  }
+  .padding-bottom-#{$name} {
+    margin-bottom: $val;
+  }
+  .padding-left-#{$name} {
+    margin-left: $val;
+  }
+  .padding-right-#{$name} {
+    margin-right: $val;
+  }
+}
+.page-content {
+  padding: 20px 32px;
+}
+.hidden {
+  display: none;
+}
+.red {
+  color: red;
+}
+.success {
+  color: #13ce66;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.no-right-radius {
+  .el-input__inner {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+.no-left-radius {
+  .el-input-group__prepend {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+  }
+}
+.no-left-radius2 {
+  .el-input__inner {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+  }
+}
+.no-left-radius3 {
+  .el-input__inner {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+.no-border {
+  border: 0 !important;
+}
+.no-padding {
+  padding: 0 !important;
+}
+.no-margin {
+  margin: 0 !important;
+}
+.no-margin-padding {
+  margin: 0 !important;
+  padding: 0 !important;
+}
