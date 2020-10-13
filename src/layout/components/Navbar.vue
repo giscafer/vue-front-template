@@ -8,7 +8,7 @@
     />
      <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
      -->
-    <logo v-if="showLogo" :collapse="false" />
+    <sidebar-logo v-if="showLogo" :collapse="false" :show-logo="showLogo" />
     <nav-menu />
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
@@ -47,19 +47,20 @@ import { mapGetters } from 'vuex';
 import Screenfull from '@/components/Screenfull';
 import SizeSelect from '@/components/SizeSelect';
 import Search from '@/components/HeaderSearch';
-import Logo from './Logo';
+import SidebarLogo from './Logo';
 import NavMenu from './NavMenu';
 
 export default {
   components: {
     Screenfull,
     SizeSelect,
-    Logo,
+    SidebarLogo,
     NavMenu,
     Search
   },
   computed: {
     showLogo() {
+      console.log(this.$store.state.settings.sidebarLogo);
       return this.$store.state.settings.sidebarLogo;
     },
     ...mapGetters(['sidebar', 'avatar', 'device'])

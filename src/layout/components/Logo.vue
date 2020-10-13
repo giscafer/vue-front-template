@@ -2,11 +2,11 @@
   <div class="sidebar-logo-container" :class="{ collapse: collapse }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" src="@/assets/images/sinohealth.png" class="sidebar-logo mini" />
+        <img v-if="showLogo" src="@/assets/images/sinohealth.png" class="sidebar-logo mini" />
         <h1 v-else class="sidebar-title">{{ title }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" src="@/assets/images/sinohealth.png" class="sidebar-logo" />
+        <img v-if="showLogo" src="@/assets/images/sinohealth.png" class="sidebar-logo" />
         <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
@@ -18,6 +18,10 @@ import settings from '@/settings';
 export default {
   name: 'SidebarLogo',
   props: {
+    showLogo: {
+      type: Boolean,
+      default: true
+    },
     collapse: {
       type: Boolean,
       required: true
@@ -25,8 +29,7 @@ export default {
   },
   data() {
     return {
-      title: settings.title,
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: settings.title
     };
   }
 };

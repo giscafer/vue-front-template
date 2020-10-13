@@ -175,9 +175,9 @@
 .nav-menu {
   height: 100%;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 0 auto !important;
   &.el-menu--horizontal {
-    border-bottom: 0;
+    border-bottom: 0 !important;
     .svg-icon {
       display: none;
     }
