@@ -1,16 +1,17 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <ve-radar-chart
+    :radar="radar"
+    :tooltip="tooltip"
+    :legend="legend"
+    :series="series"
+    :height="height"
+    legend-position="bottom-center"
+    theme="macarons"
+  />
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
-
-const animationDuration = 3000
-
 export default {
-  mixins: [resize],
   props: {
     className: {
       type: String,
@@ -21,67 +22,59 @@ export default {
       default: '100%'
     },
     height: {
-      type: String,
-      default: '300px'
+      type: Number,
+      default: 300
     }
   },
   data() {
     return {
-      chart: null
-    }
+      radar: {},
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      legend: {
+        left: 'center',
+        bottom: '10',
+        data: ['Allocated Budget', 'Expected Spending', 'Actual Spending']
+      },
+      series: []
+    };
   },
   mounted() {
-    this.$nextTick(() => {
-      this.initChart()
-    })
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return
-    }
-    this.chart.dispose()
-    this.chart = null
+    this.initChart();
   },
   methods: {
+    // 雷达图配置复杂，使用原生属性的方式
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-
-      this.chart.setOption({
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+      this.radar = {
+        radius: '66%',
+        center: ['50%', '42%'],
+        splitNumber: 8,
+        splitArea: {
+          areaStyle: {
+            color: 'rgba(127,95,132,.3)',
+            opacity: 1,
+            shadowBlur: 45,
+            shadowColor: 'rgba(0,0,0,.5)',
+            shadowOffsetX: 0,
+            shadowOffsetY: 15
           }
         },
-        radar: {
-          radius: '66%',
-          center: ['50%', '42%'],
-          splitNumber: 8,
-          splitArea: {
-            areaStyle: {
-              color: 'rgba(127,95,132,.3)',
-              opacity: 1,
-              shadowBlur: 45,
-              shadowColor: 'rgba(0,0,0,.5)',
-              shadowOffsetX: 0,
-              shadowOffsetY: 15
-            }
-          },
-          indicator: [
-            { name: 'Sales', max: 10000 },
-            { name: 'Administration', max: 20000 },
-            { name: 'Information Technology', max: 20000 },
-            { name: 'Customer Support', max: 20000 },
-            { name: 'Development', max: 20000 },
-            { name: 'Marketing', max: 20000 }
-          ]
-        },
-        legend: {
-          left: 'center',
-          bottom: '10',
-          data: ['Allocated Budget', 'Expected Spending', 'Actual Spending']
-        },
-        series: [{
+        indicator: [
+          { name: 'Sales', max: 10000 },
+          { name: 'Administration', max: 20000 },
+          { name: 'Information Technology', max: 20000 },
+          { name: 'Customer Support', max: 20000 },
+          { name: 'Development', max: 20000 },
+          { name: 'Marketing', max: 20000 }
+        ]
+      };
+      this.series = [
+        {
           type: 'radar',
           symbolSize: 0,
           areaStyle: {
@@ -107,10 +100,10 @@ export default {
               name: 'Actual Spending'
             }
           ],
-          animationDuration: animationDuration
-        }]
-      })
+          animationDuration: 2600
+        }
+      ];
     }
   }
-}
+};
 </script>

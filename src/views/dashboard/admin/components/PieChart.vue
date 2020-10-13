@@ -1,14 +1,16 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <ve-pie-chart
+    :data="chartData"
+    :settings="chartSettings"
+    :class="className"
+    :height="height"
+    legend-position="bottom-center"
+    theme="macarons"
+  />
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
-
 export default {
-  mixins: [resize],
   props: {
     className: {
       type: String,
@@ -19,61 +21,40 @@ export default {
       default: '100%'
     },
     height: {
-      type: String,
-      default: '300px'
+      type: Number,
+      default: 300
     }
   },
   data() {
+    this.chartSettings = {
+      roseType: 'radius',
+      radius: [15, 95],
+      left: 'center',
+      bottom: '10'
+    };
     return {
-      chart: null
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart()
-    })
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return
-    }
-    this.chart.dispose()
-    this.chart = null
-  },
-  methods: {
-    initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-
-      this.chart.setOption({
+      chartData: {
+        dimensions: {
+          name: 'type',
+          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
-        legend: {
-          left: 'center',
-          bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
-        },
-        series: [
+        measures: [
           {
             name: 'WEEKLY WRITE ARTICLES',
-            type: 'pie',
-            roseType: 'radius',
-            radius: [15, 95],
-            center: ['50%', '38%'],
-            data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
-            ],
+            data: [320, 240, 149, 100, 59],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }
         ]
-      })
-    }
-  }
-}
+      }
+    };
+  },
+  mounted() {},
+
+  methods: {}
+};
 </script>
