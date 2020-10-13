@@ -17,7 +17,7 @@ Element UI 工程初始化模板，适用于前台类网站
 git clone https://github.com/giscafer/vue-front-template.git
 
 # 进入项目目录
-cd middle-platform-console-web
+cd vue-front-template
 
 # 安装依赖
 npm install
