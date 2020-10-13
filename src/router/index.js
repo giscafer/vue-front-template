@@ -4,7 +4,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import tableRouter from './modules/table';
 import demoRouter from './modules/demo';
-import openMiddlePlatformRouter from './modules/open-middle-platform';
+import openMiddlePlatformRouter from './modules/open-platform';
 
 Vue.use(Router);
 

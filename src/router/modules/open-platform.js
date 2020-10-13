@@ -1,5 +1,7 @@
 /** When your routing open-middle-platform is too long, you can split it into small modules **/
-
+/**
+ * 开放平台路由
+ */
 import Layout from '@/layout';
 
 const openMiddlePlatformRouter = {
