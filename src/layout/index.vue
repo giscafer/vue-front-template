@@ -4,7 +4,7 @@
     <div :class="{ 'fixed-header': fixedHeader }">
       <navbar />
     </div>
-    <div :class="{ hasTagsView: needTagsView }" class="main-container">
+    <div :class="{ hasTagsView: needTagsView, 'margin-fixed': fixedHeader }" class="main-container">
       <app-main />
       <right-panel v-if="showSettings">
         <settings />
