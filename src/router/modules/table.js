@@ -1,6 +1,6 @@
 /** When your routing table is too long, you can split it into small modules **/
 
-import Layout from '@/layout'
+import Layout from '@/layout';
 
 const tableRouter = {
   path: '/table',
@@ -37,5 +37,5 @@ const tableRouter = {
       meta: { title: 'Complex Table' }
     }
   ]
-}
-export default tableRouter
+};
+export default tableRouter;
