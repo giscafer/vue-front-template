@@ -15,15 +15,17 @@ module.exports = {
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
     'vue/max-attributes-per-line': [
-      2,
+      0,
       {
-        singleline: 10,
+        singleline: 1,
         multiline: {
           max: 1,
           allowFirstLine: false
         }
       }
     ],
+    'vue/html-indent': 'off',
+    'vue/html-closing-bracket-newline': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],
@@ -244,7 +246,15 @@ module.exports = {
       2,
       'always',
       {
-        markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
+        markers: [
+          'global',
+          'globals',
+          'eslint',
+          'eslint-disable',
+          '*package',
+          '!',
+          ','
+        ]
       }
     ],
     'template-curly-spacing': [2, 'never'],

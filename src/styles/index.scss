@@ -23,9 +23,9 @@ html {
   box-sizing: border-box;
 }
 
-#app {
+/* #app {
   height: 100%;
-}
+} */
 
 *,
 *:before,
@@ -105,8 +105,8 @@ aside {
   display: block;
   line-height: 32px;
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   color: #2c3e50;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -124,6 +124,7 @@ aside {
 //main-container全局样式
 .app-container {
   padding: 20px;
+  background-color: #fff;
 }
 
 .components-container {
@@ -132,7 +133,7 @@ aside {
 }
 
 .pagination-container {
-  margin-top: 30px;
+  padding-top: 36px !important;
 }
 
 .text-center {

@@ -11,6 +11,12 @@ const demoRouter = {
   },
   children: [
     {
+      path: 'container-demo',
+      component: () => import('@/views/demo/container-demo/index'),
+      name: 'Container Demo',
+      meta: { title: 'Container Demo' }
+    },
+    {
       path: 'table',
       component: () => import('@/views/demo/table/index'),
       name: 'STable Demo',

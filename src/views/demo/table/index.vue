@@ -7,44 +7,55 @@
       :loading="listLoading"
       :columns="columns"
       :page-size="5"
-      :page-sizes="[5,10,30]"
+      :page-sizes="[5, 10, 30]"
       @query-change="getList"
     ></s-table>
     <div class="seperator"></div>
     <!-- 自定义字段模板 -->
     <h3>STable 自定义字段模板</h3>
     <s-table
+      class="margin-top-30"
       :data="data"
       :loading="listLoading"
       :columns="columns"
       :page-size="5"
       @query-change="getList"
     >
-      <template #hiddenText="{row}">
-        <span class="link-type" @click="handleAction(row,'secret')">点击查看</span>
+      <template #hiddenText="{ row }">
+        <span class="link-type" @click="handleAction(row, 'secret')"
+          >点击查看</span
+        >
       </template>
       <template #action>
         <el-table-column label="操作" width="250" align="center">
-          <template slot-scope="{row,$index}">
+          <template slot-scope="{ row, $index }">
             <el-button
-              v-if="row.status!='published'"
+              v-if="row.status != 'published'"
               size="mini"
               type="primary"
-              @click="handleAction(row,'published')"
-            >权限</el-button>
+              @click="handleAction(row, 'published')"
+              >权限</el-button
+            >
             <el-button
-              v-if="row.status!='unfreeze'"
+              v-if="row.status != 'unfreeze'"
               type="success"
               size="mini"
-              @click="handleAction(row,'freeze')"
-            >冻结</el-button>
+              @click="handleAction(row, 'freeze')"
+              >冻结</el-button
+            >
             <el-button
-              v-if="row.status!='freeze'"
+              v-if="row.status != 'freeze'"
               type="success"
               size="mini"
-              @click="handleAction(row,'unfreeze')"
-            >解冻</el-button>
-            <el-button size="mini" type="danger" @click="handleAction(row,$index)">重置密码</el-button>
+              @click="handleAction(row, 'unfreeze')"
+              >解冻</el-button
+            >
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleAction(row, $index)"
+              >重置密码</el-button
+            >
           </template>
         </el-table-column>
       </template>
@@ -54,10 +65,8 @@
 
 <script>
 import { fetchList } from '@/api/user-manage'; // Mock
-import STable from '@/components/Table';
 
 export default {
-  components: { STable },
   data() {
     return {
       columns: [

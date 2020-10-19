@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import 'normalize.css/normalize.css'; // a modern alternative to CSS resets
 import '@/plugins'; // 第三方插件使用
+import '@/components'; // 全局组件
 import '@/styles/index.scss'; // global css，在plugins之后引入，有些样式可以直接覆盖
 import App from './App';
 import store from './store';

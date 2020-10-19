@@ -1,7 +1,8 @@
 #app {
+  background-color: $backgroudColor;
   .main-container {
     position: relative;
-    min-height: 100%;
+    min-height: calc(100vh - #{$navBarHeight});
     // transition: margin-left 0.28s;
     // margin-left: $sideBarWidth;
   }
@@ -23,7 +24,8 @@
 
     // reset element-ui css
     .horizontal-collapse-transition {
-      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out,
+        0s padding-right ease-in-out;
     }
 
     .scrollbar-wrapper {
@@ -91,11 +93,6 @@
     .sidebar-container {
       width: 54px !important;
     }
-
-    .main-container {
-      margin-left: 54px;
-    }
-
     .submenu-title-noDropdown {
       padding: 0 !important;
       position: relative;
