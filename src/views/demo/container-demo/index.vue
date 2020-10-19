@@ -16,10 +16,14 @@ export default {
   name: 'ContainerDemo',
   props: {},
   data() {
-    return {};
+    return {
+      obj: {}
+    };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    console.log('可选链特性支持：' + this.obj?.name?.first);
+  },
   methods: {}
 };
 </script>
