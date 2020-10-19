@@ -7,6 +7,7 @@ import '@/styles/index.scss'; // global css，在plugins之后引入，有些样
 import App from './App';
 import store from './store';
 import router from './router';
+import '@/views/components'; // 全局业务组件
 
 import './icons'; // icon
 import './permission'; // permission control

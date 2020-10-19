@@ -1,20 +1,25 @@
 <template>
-  <page-container :aside-width="300">
-    <template v-slot:aside>
-      <h3>aside</h3>
-    </template>
-    <template v-slot:title>
-      <span>柳州一致白阳药店-月度-规模洞察</span>
-    </template>
-    <template v-slot:content>
-      <h3>content</h3>
-    </template>
-  </page-container>
+  <div class="flex">
+    <div class="aside" :style="{ width: asideWidth + 'px' }">
+      <slot name="aside"></slot>
+    </div>
+    <div class="page-container">
+      <p v-if="$slots.title" class="title"><slot name="title"></slot></p>
+      <div class="page-content">
+        <slot name="content"></slot>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
-  name: 'ContainerDemo',
-  props: {},
+  name: 'PageContainer',
+  props: {
+    asideWidth: {
+      type: Number,
+      default: 280
+    }
+  },
   data() {
     return {};
   },
@@ -26,8 +31,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/variables.scss';
 .flex {
-  display: flex;
-
+  display: relative;
   .aside {
     width: 280px;
     padding: 20px 0 0 24px;

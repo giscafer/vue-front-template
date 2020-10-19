@@ -13,8 +13,8 @@ const demoRouter = {
     {
       path: 'container-demo',
       component: () => import('@/views/demo/container-demo/index'),
-      name: 'Container Demo',
-      meta: { title: 'Container Demo' }
+      name: 'PageContainer Demo',
+      meta: { title: 'PageContainer Demo' }
     },
     {
       path: 'table',
