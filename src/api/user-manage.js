@@ -1,9 +1,5 @@
-import request from '@/shared/request';
+import { get } from '@/shared/request';
 
 export function fetchList(query) {
-  return request({
-    url: '/vue-admin-template/user/list',
-    method: 'get',
-    params: query
-  });
+  return get('/vue-admin-template/user/list', query)
 }

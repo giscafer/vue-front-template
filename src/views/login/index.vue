@@ -1,6 +1,5 @@
 <template>
   <div class="login-page">
-    <img class="logo" src="@/assets/images/logo.png" alt="中康资讯" />
     <div class="login-container">
       <div class="intro-panel">
         <div class="app-name">
@@ -72,7 +71,7 @@
       </div>
     </div>
     <div class="footer">
-      <span class="copyright">copyright©2008～2020 Sinohealth, All Rights Reserved 粤ICP备17031174号</span>
+      <span class="copyright">copyright©2020～2021 Sinohealth, All Rights Reserved 粤ICP备170xxxxx号</span>
     </div>
   </div>
 </template>
