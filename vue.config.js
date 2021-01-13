@@ -116,5 +116,18 @@ module.exports = {
       });
       config.optimization.runtimeChunk('single');
     });
+
+    const oneOfsMap = config.module.rule('scss').oneOfs.store
+    oneOfsMap.forEach(item => {
+      item
+        .use('sass-resources-loader')
+        .loader('sass-resources-loader')
+        .options({
+          // Provide path to the file with resources
+          // 要公用的scss的路径
+          resources: './src/styles/variables.scss' // 设置后全局使用声明变量
+        })
+        .end()
+    })
   }
 };
